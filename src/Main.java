@@ -1,28 +1,61 @@
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Main {
-    private JButton time = new JButton("Time Calculator");
-    private JButton basic = new JButton("Basic Calculator");
-    private JButton big = new JButton("Big Int Calculator");
-    private JButton graphing = new JButton("Graphing Calculator");
-    private JTextField display = new JTextField(8);
+public class Main implements ActionListener {
+
+    JPanel navigator;
+    Calculator calculator;
+    JButton time,basic,bigInt,amButton,pmButton,colonButton;
+    Main() {
+        JFrame frame = new JFrame("Calculator");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(570, 600);
+        frame.setLayout(null);
+        calculator = new BasicCalculator();
+
+        navigator = new JPanel(null);
+        navigator.setBounds(420,0,150,600);
+
+        time = new JButton("Time");
+        time.addActionListener(this);
+        time.setBounds(0,25,100,40);
+        basic = new JButton("Basic");
+        basic.addActionListener(this);
+        basic.setBounds(0,75,100,40);
+        bigInt = new JButton("Big Integer");
+        bigInt.addActionListener(this);
+        bigInt.setBounds(0,125,100,40);
+        amButton = new JButton("AM");
+        amButton.addActionListener(this);
+        bigInt.setBounds(0,175,100,40);
+        pmButton = new JButton("PM");
+        pmButton.addActionListener(this);
+        bigInt.setBounds(0,225,100,40);
+        colonButton = new JButton(":");
+        colonButton.addActionListener(this);
+        bigInt.setBounds(0,275,100,40);
+
+        navigator.add(time);
+        navigator.add(basic);
+
+        frame.add(calculator);
+        frame.add(navigator);
+        frame.setVisible(true);
+    }
+
     public static void main(String[] args) {
-        Calculator calc = new TimeCalculator();
-        JFrame mainWindow = new JFrame();
-        mainWindow.setVisible(true);
-        mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainWindow.setResizable(false);
-        JPanel cont = new JPanel(new BorderLayout());
-        cont.setBorder(new EmptyBorder(10,10,10,10));
-        mainWindow.setLocationRelativeTo(null);
-        cont.add(calc.getDisplay(),BorderLayout.PAGE_START);
-        cont.add(calc.getButtons(),BorderLayout.CENTER);
-        mainWindow.setContentPane(cont);
-        mainWindow.pack();
-        //mainWindow.setLayout(todo);
+        new Main();
+    }
 
-        //set a listener to check which button is pressed.
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == time) {
+            calculator = new TimeCalculator();
+        }
+        if (e.getSource() == basic) {
+            calculator = new BasicCalculator();
+        }
+        if (e.getSource() == bigInt) {}
     }
 }
