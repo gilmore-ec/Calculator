@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
-public abstract class Calculator extends JPanel implements ActionListener {
+public abstract class Calculator extends JPanel implements ActionListener, KeyListener {
 
     JTextField calculations;
     JButton[] buttons = new JButton[10];
