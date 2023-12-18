@@ -2,17 +2,17 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main implements ActionListener {
+public class Main extends JFrame implements ActionListener {
 
     JPanel navigator;
     Calculator calculator;
     JButton time,basic,bigInt,amButton,pmButton,colonButton;
     Main() {
-        JFrame frame = new JFrame("Calculator");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(570, 600);
-        frame.setLayout(null);
-        calculator = new BasicCalculator();
+        setTitle("Calculator");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(570, 600);
+        setLayout(null);
+        calculator = new TimeCalculator();
 
         navigator = new JPanel(null);
         navigator.setBounds(420,0,150,600);
@@ -39,9 +39,9 @@ public class Main implements ActionListener {
         navigator.add(time);
         navigator.add(basic);
 
-        frame.add(calculator);
-        frame.add(navigator);
-        frame.setVisible(true);
+        add(calculator);
+        add(navigator);
+        setVisible(true);
     }
 
     public static void main(String[] args) {
