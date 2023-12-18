@@ -52,7 +52,7 @@ public class BasicCalculator extends Calculator {
                 calculations.setText("");
             } else num1 = 0;
         }
-        if (e.getSource() == addB && !("" + num1).isEmpty()) {
+        if (e.getSource() == addB) {
             operator = '+';
             num1 = Double.parseDouble((negative? "-":"") + calculations.getText());
             calculations.setText("");
@@ -60,20 +60,20 @@ public class BasicCalculator extends Calculator {
         if (e.getSource() == subB && calculations.getText().isEmpty()) {
             calculations.setText("-");
         }
-        else if (e.getSource() == subB && !("" + num1).isEmpty()) {
+        else if (e.getSource() == subB) {
             operator = '-';
             num1 = Double.parseDouble((negative? "-":"") + calculations.getText());
             calculations.setText("");
         }
-        else if (e.getSource() == subB && ("" + num1).isEmpty()) {
+        else if (e.getSource() == subB) {
             negative = true;
         }
-        if (e.getSource() == altB && !("" + num1).isEmpty()) {
+        if (e.getSource() == altB) {
             operator = '/';
             num1 = Double.parseDouble((negative? "-":"") + calculations.getText());
             calculations.setText("");
         }
-        if (e.getSource() == altA && !("" + num1).isEmpty()) {
+        if (e.getSource() == altA) {
             operator = '*';
             num1 = Double.parseDouble((negative? "-":"") + calculations.getText());
             calculations.setText("");

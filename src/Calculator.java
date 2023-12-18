@@ -21,7 +21,7 @@ public abstract class Calculator extends JPanel implements ActionListener, KeyLi
         setLayout(null);
 
         historyFrame = new JFrame("History");
-        historyPane = new JPanel();;
+        historyPane = new JPanel();
         historyFrame.setSize(250,400);
         history = new JTextArea();
         historyPane.add(history);
