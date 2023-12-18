@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Date;
 
 public class TimeCalculator extends Calculator {
@@ -68,6 +70,7 @@ public class TimeCalculator extends Calculator {
         }
         startPartOfDay.setText(startMorning? "AM":"PM");
         hours = (startMorning? hours:hours%12);
+        hours = (hours==0? 12:hours);
         startTime = String.format("%02d%s",hours,startTime.substring(2));
         start.setText(startTime);
 
@@ -83,6 +86,7 @@ public class TimeCalculator extends Calculator {
         calculations.setEditable(true);
         calculations.requestFocus();
         calculations.setBounds(125,35,100,30);
+        calculations.addKeyListener(this);
     }
 
     /**
@@ -138,6 +142,42 @@ public class TimeCalculator extends Calculator {
 
     /**
      *
+     */
+    private void enter() {
+        if (!calculations.getText().isEmpty()) {
+        startToNum();
+        num2 = Double.parseDouble(calculations.getText());
+        if (!Double.toString(num1).isEmpty() && !Double.toString(num2).isEmpty()) {
+            switch (operator) {
+                case '+' -> {
+                    result = (num1 + num2)%24;
+                    endPartOfDay.setText(result>11? "PM":"AM");
+                    end.setText(returnEnd(result));
+                }
+                case '-' -> {
+                    result = num1 - num2;
+                    endPartOfDay.setText(result>11? "PM":"AM");
+                    end.setText(returnEnd(result));
+                }
+            }
+        } else if (Double.toString(num1).isEmpty()) {
+            getSystemTime();
+        }
+        //history logging:
+        if (history.getText().isEmpty()) {
+            String hist = String.format("%s %s %c %f hours = %s %s",returnEnd(num1),(endMorning? "AM":"PM"),operator,num2,returnEnd(result),(endMorning? "AM":"PM"));
+            history.append(hist);
+            //history.append(returnEnd(num1) + " " + operator + " " + num2 + "hours = " + returnEnd);
+        } else {
+            String hist = String.format("%s %s %c %f hours = %s %s",returnEnd(num1),(endMorning? "AM":"PM"),operator,num2,returnEnd(result),(endMorning? "AM":"PM"));
+            history.append("\n" + hist);
+        }
+    }
+        calculations.setText("");
+    }
+
+    /**
+     *
      * @param e the event to be processed
      */
     @Override
@@ -176,36 +216,7 @@ public class TimeCalculator extends Calculator {
             startMorning = true;
         }
         if (e.getSource() == equalsB) {
-            if (!calculations.getText().isEmpty()) {
-                startToNum();
-                num2 = Double.parseDouble(calculations.getText());
-                if (!Double.toString(num1).isEmpty() && !Double.toString(num2).isEmpty()) {
-                    switch (operator) {
-                        case '+' -> {
-                            result = (num1 + num2)%24;
-                            endPartOfDay.setText(result>11? "PM":"AM");
-                            end.setText(returnEnd(result));
-                        }
-                        case '-' -> {
-                            result = num1 - num2;
-                            endPartOfDay.setText(result>11? "PM":"AM");
-                            end.setText(returnEnd(result));
-                        }
-                    }
-                } else if (Double.toString(num1).isEmpty()) {
-                    getSystemTime();
-                }
-                //history logging:
-                if (history.getText().isEmpty()) {
-                    String hist = String.format("%s %s %c %f hours = %s %s",returnEnd(num1),(endMorning? "AM":"PM"),operator,num2,returnEnd(result),(endMorning? "AM":"PM"));
-                    history.append(hist);
-                    //history.append(returnEnd(num1) + " " + operator + " " + num2 + "hours = " + returnEnd);
-                } else {
-                    String hist = String.format("%s %s %c %f hours = %s %s",returnEnd(num1),(endMorning? "AM":"PM"),operator,num2,returnEnd(result),(endMorning? "AM":"PM"));
-                    history.append("\n" + hist);
-                }
-            }
-            calculations.setText("");
+            enter();
         }
         //show history:
         if (e.getSource().equals(hstB)) {
@@ -219,5 +230,22 @@ public class TimeCalculator extends Calculator {
             System.out.println(startEditable);
         }
         //add a keyboard input check here
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+            enter();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
