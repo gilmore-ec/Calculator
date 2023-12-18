@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Date;
 
 public class TimeCalculator extends Calculator {
@@ -241,6 +240,12 @@ public class TimeCalculator extends Calculator {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_ENTER) {
             enter();
+        }
+        if (e.getKeyCode()==KeyEvent.VK_PLUS) {
+            operator = '+';
+        }
+        if (e.getKeyCode()==KeyEvent.VK_MINUS) {
+            operator = '-';
         }
     }
 
